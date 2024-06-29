@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="smallPadding">16.dp</dimen>
+    <dimen name="mediumPadding1">24.dp</dimen>
+    <dimen name="mediumPadding2">32.dp</dimen>
+    <dimen name="indicatorSize">16.dp</dimen>
+    <dimen name="pageIndicatorWidth">64.dp</dimen>
+</resources>
