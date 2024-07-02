@@ -1,8 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <dimen name="smallPadding">16.dp</dimen>
+    <dimen name="smallPadding">10.dp</dimen>
     <dimen name="mediumPadding1">24.dp</dimen>
     <dimen name="mediumPadding2">32.dp</dimen>
     <dimen name="indicatorSize">16.dp</dimen>
     <dimen name="pageIndicatorWidth">64.dp</dimen>
+    <dimen name="articleSize">96.dp</dimen>
+    <dimen name="extraSmallPadding">3.dp</dimen>
+    <dimen name="smallIconSize">11.dp</dimen>
+    <dimen name="articleImageSize">248.dp</dimen>
 </resources>

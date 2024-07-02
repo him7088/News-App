@@ -56,6 +56,8 @@ android {
 dependencies {
 
     implementation(libs.androidx.room.runtime)
+    implementation(libs.androidx.paging.common.android)
+    implementation(libs.androidx.paging.compose.android)
     annotationProcessor(libs.androidx.room.compiler)
 
     // To use Kotlin Symbol Processing (KSP)
@@ -81,6 +83,13 @@ dependencies {
     implementation ("com.google.dagger:hilt-android:2.51.1")
 
     ksp ("com.google.dagger:hilt-compiler:2.51.1")
+
+    implementation ("androidx.hilt:hilt-navigation-compose:1.2.0")
+
+    implementation("io.coil-kt:coil-compose:2.6.0")
+
+
+
 
 
     implementation(libs.androidx.navigation.compose)
