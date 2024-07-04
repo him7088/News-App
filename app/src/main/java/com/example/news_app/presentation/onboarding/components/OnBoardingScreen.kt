@@ -77,7 +77,6 @@ fun OnBoardingScreen(
 
             if(buttonState.value[0].isNotEmpty()) {
                 OnBoardingPageButton(
-                    text = buttonState.value[0],
                     imageVector = Icons.AutoMirrored.Default.KeyboardArrowLeft,
                     onClick = {
                         scope.launch {
@@ -90,7 +89,6 @@ fun OnBoardingScreen(
             }
 
             OnBoardingPageButton(
-                text = buttonState.value[1],
                 imageVector = Icons.AutoMirrored.Default.KeyboardArrowRight,
                 onClick = {
                     scope.launch {

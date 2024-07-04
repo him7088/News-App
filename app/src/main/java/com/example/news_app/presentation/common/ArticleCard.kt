@@ -39,7 +39,9 @@ fun ArticleCard(
     onClick:() -> Unit
 ) {
     Row(
-        modifier = Modifier.clickable { onClick() }
+        modifier = modifier
+            .clickable { onClick() }
+            .padding(bottom = dimensionResource(id = R.dimen.mediumPadding1))
     ) {
         Image(
             painter = rememberAsyncImagePainter(model = article.urlToImage),
@@ -59,7 +61,7 @@ fun ArticleCard(
             Text(
                 text = article.title,
                 style = MaterialTheme.typography.bodyMedium,
-                color = colorResource(id = R.color.teal_700),
+                color = colorResource(id = R.color.app_color),
                 maxLines = 2,
                 overflow = TextOverflow.Ellipsis
 
@@ -70,7 +72,7 @@ fun ArticleCard(
                 Text(
                     text = article.source.name,
                     style = MaterialTheme.typography.labelMedium.copy(fontWeight = FontWeight.Bold),
-                    color = colorResource(id = R.color.black),
+                    color =  MaterialTheme.colorScheme.secondary,
 
                 )
                 Spacer(modifier = Modifier.width(6.dp))
@@ -79,14 +81,14 @@ fun ArticleCard(
                    painter = painterResource(id = R.drawable.baseline_access_time_24),
                    contentDescription = null,
                    modifier = Modifier.size(dimensionResource(id = R.dimen.smallIconSize)),
-                   tint = Color.Black
+                   tint = MaterialTheme.colorScheme.secondary
                )
                 Spacer(modifier = Modifier.width(6.dp))
 
                 Text(
                     text = article.publishedAt,
                     style = MaterialTheme.typography.labelMedium.copy(fontWeight = FontWeight.Bold),
-                    color = colorResource(id = R.color.black),
+                    color = MaterialTheme.colorScheme.secondary,
 
                     )
 
@@ -107,7 +109,7 @@ fun ArticlePreview() {
             description = "",
             publishedAt = "9:22 pm 30/06/2024",
             source = Source(id = "", name = "ABC"),
-            title = "vsghdvchsjbdcbjwkenc hjedbejwkdbn  ejhgdh egd",
+            title = "hello this article is for preview",
             url = "abc.com",
             urlToImage = ""
         )) {

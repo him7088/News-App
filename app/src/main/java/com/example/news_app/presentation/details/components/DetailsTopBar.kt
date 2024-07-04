@@ -1,6 +1,5 @@
 package com.example.news_app.presentation.details.components
 
-import android.content.res.Configuration
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.size
 import androidx.compose.material.icons.Icons
@@ -23,11 +22,17 @@ import com.example.news_app.presentation.theme.NewsAppTheme
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun DetailsTopBar (
+    isBookmarked : Boolean = false,
     onBrowsingClick : () -> Unit,
     onShareClick : () -> Unit,
     onBookmarkClick : () -> Unit,
     onBackClick : () -> Unit
-){
+)
+
+{
+
+
+
     TopAppBar(
         title = { /*TODO*/ },
         modifier = Modifier.fillMaxWidth(),
@@ -56,9 +61,12 @@ fun DetailsTopBar (
                 Icon(painter = painterResource(id = R.drawable.baseline_share_24 ), contentDescription = null)
 
             }
-            IconButton(onClick = { onBookmarkClick() }) {
+            IconButton(onClick = { onBookmarkClick()}) {
 
-                Icon(painter = painterResource(id = R.drawable.baseline_bookmark_border_24 ), contentDescription = null)
+                Icon(
+                    painter = painterResource(id = if(isBookmarked) R.drawable.baseline_bookmark_24 else R.drawable.baseline_bookmark_border_24 ) ,
+                    contentDescription = null
+                )
 
             }
         }
@@ -72,7 +80,9 @@ fun DetailsTopBarPreview() {
         DetailsTopBar(
             onBrowsingClick = { /*TODO*/ },
             onShareClick = { /*TODO*/ },
-            onBookmarkClick = { /*TODO*/ }) {
+            onBookmarkClick = {  },
+            isBookmarked = true
+        ) {
             
         }
     }

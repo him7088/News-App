@@ -1,6 +1,10 @@
 package com.example.news_app.di
 
 import android.app.Application
+import androidx.room.Room
+import com.example.news_app.data.local.dao.NewsDao
+import com.example.news_app.data.local.database.NewsDatabase
+import com.example.news_app.data.local.type_converter.NewsTypeConverter
 import com.example.news_app.data.manager.LocalUserManagerImpl
 import com.example.news_app.data.remote.ApiService
 import com.example.news_app.data.repository.NewRepositoryImp
@@ -9,9 +13,13 @@ import com.example.news_app.domain.repository.NewsRepository
 import com.example.news_app.domain.usecases.app_Entry.AppEntryUseCases
 import com.example.news_app.domain.usecases.app_Entry.ReadAppEntry
 import com.example.news_app.domain.usecases.app_Entry.SaveAppEntry
+import com.example.news_app.domain.usecases.news.DeleteArticle
 import com.example.news_app.domain.usecases.news.GetNews
 import com.example.news_app.domain.usecases.news.NewsUseCases
 import com.example.news_app.domain.usecases.news.SearchNews
+import com.example.news_app.domain.usecases.news.SelectArticle
+import com.example.news_app.domain.usecases.news.SelectArticles
+import com.example.news_app.domain.usecases.news.UpsertArticle
 import com.example.news_app.presentation.splashScreen.MySplashCondition
 import com.example.news_app.util.Constants
 import dagger.Module
@@ -57,17 +65,46 @@ object AppModule {
     @Provides
     @Singleton
     fun provideNewsRepository(
-        newsApiService: ApiService
-    ) : NewsRepository = NewRepositoryImp(newsApiService = newsApiService)
+        newsApiService: ApiService,
+        newsDao: NewsDao
+    ) : NewsRepository = NewRepositoryImp(
+        newsApiService = newsApiService,
+        newsDao = newsDao
+    )
+
 
     @Provides
     @Singleton
     fun provideNewsUseCases(
-        newsRepository: NewsRepository
+        newsRepository: NewsRepository,
     ) : NewsUseCases {
         return NewsUseCases(
             getNews = GetNews(newsRepository =newsRepository ),
-            searchNews = SearchNews(newsRepository = newsRepository)
+            searchNews = SearchNews(newsRepository = newsRepository),
+            upsertArticle = UpsertArticle(newsRepository = newsRepository),
+            deleteArticle = DeleteArticle(newsRepository = newsRepository),
+            selectArticles = SelectArticles(newsRepository = newsRepository),
+            selectArticle = SelectArticle(newsRepository = newsRepository)
         )
     }
+
+    @Provides
+    @Singleton
+    fun provideNewsDatabase(
+        application: Application
+    ): NewsDatabase{
+        return Room.databaseBuilder(
+            context = application,
+            klass = NewsDatabase::class.java,
+            name = "news-db"
+        ).addTypeConverter(NewsTypeConverter())
+            .fallbackToDestructiveMigration()
+            .build()
+    }
+
+    @Provides
+    @Singleton
+    fun provideNewsDao(
+        newsDatabase: NewsDatabase
+    ): NewsDao = newsDatabase.newsDao
 }

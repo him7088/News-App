@@ -1,4 +1,4 @@
-package com.example.news_app.presentation.details.components
+package com.example.news_app.presentation.details
 
 import android.content.Intent
 import android.net.Uri
@@ -15,6 +15,10 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.derivedStateOf
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
@@ -22,22 +26,28 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.dimensionResource
-import androidx.compose.ui.tooling.preview.Preview
 import coil.compose.rememberAsyncImagePainter
 import com.example.news_app.R
 import com.example.news_app.domain.model.Article
-import com.example.news_app.domain.model.Source
-import com.example.news_app.presentation.theme.NewsAppTheme
+import com.example.news_app.presentation.bookmark.BookmarkViewModel
+import com.example.news_app.presentation.details.components.DetailsTopBar
 
 @Composable
 fun DetailScreen(
     article: Article,
     event : (DetailsEvent) -> Unit,
-    navigateUp : () -> Unit
+    navigateUp : () -> Unit,
+    viewModel: BookmarkViewModel
 ) {
    
     val context = LocalContext.current
-    
+
+    val bookmarkState by viewModel.state.collectAsState()
+
+    val isBookmarked by remember(bookmarkState) {
+        derivedStateOf { bookmarkState.articles.contains(article) }
+    }
+
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -45,15 +55,15 @@ fun DetailScreen(
     ) {
         DetailsTopBar(
             onBrowsingClick = {
-                Intent(Intent.ACTION_VIEW).also { 
+                Intent(Intent.ACTION_VIEW).also {
                     it.data = Uri.parse(article.url)
                     if(it.resolveActivity(context.packageManager) != null) {
                         context.startActivity(it)
                     }
                 }
             },
-            onShareClick = { 
-                Intent(Intent.ACTION_SEND).also { 
+            onShareClick = {
+                Intent(Intent.ACTION_SEND).also {
                     it.putExtra(Intent.EXTRA_TEXT, article.url)
                     it.type = "text/plain"
                     if(it.resolveActivity(context.packageManager) != null) {
@@ -61,13 +71,15 @@ fun DetailScreen(
                     }
                 }
             },
-            onBookmarkClick = { 
-                event(DetailsEvent.SaveArticle)
+            onBookmarkClick = {
+                event(DetailsEvent.UpsertDeleteArticle(article))
             },
-            
+
             onBackClick = {
                 navigateUp()
-            }
+            },
+            isBookmarked = isBookmarked
+
         )
         
         LazyColumn (
@@ -106,21 +118,3 @@ fun DetailScreen(
     }
 }
 
-@Preview(showBackground = true)
-@Composable
-fun DetailScreenPreview() {
-    NewsAppTheme {
-        DetailScreen(article = Article(
-            author= "Radek Zielinski",
-            title= "VanEck Set to Launch Spot Bitcoin ETF on Australia’s ASX",
-            description= "Prominent investment management firm VanEck announced that it is about to list Australia’s first spot Bitcoin (BTC) exchange-traded fund (ETF)… Continue reading VanEck Set to Launch Spot Bitcoin ETF on Australia’s ASX\nThe post VanEck Set to Launch Spot Bitcoi…",
-            url= "https://readwrite.com/vaneck-set-to-launch-spot-bitcoin-etf-on-australias-asx/",
-            urlToImage= "https://readwrite.com/wp-content/uploads/2024/06/ea85a934-c8fc-4d65-9279-ff85bb79fbae.webp",
-            publishedAt= "2024-06-17T15:43:51Z",
-            content= "Prominent investment management firm VanEck announced that it is about to list\r\n Australia’s first spot Bitcoin (BTC) exchange-traded fund (ETF) listed on the domestic Australian Securities Exchange … [+1968 chars]",
-            source = Source(id = "", name = "")
-
-        ),  event = {},
-            navigateUp = {})
-    }
-    }

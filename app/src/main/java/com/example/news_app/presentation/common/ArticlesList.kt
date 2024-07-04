@@ -17,6 +17,33 @@ import com.example.news_app.domain.model.Article
 @Composable
 fun ArticlesList(
     modifier: Modifier,
+    articles : List<Article>,
+    onClick : (Article) -> Unit,
+) {
+    if(articles.isEmpty()) {
+        EmptyScreen()
+    }
+        LazyColumn(
+            modifier = modifier.fillMaxSize(),
+            verticalArrangement = Arrangement.spacedBy(dimensionResource(id = R.dimen.mediumPadding1)),
+            contentPadding = PaddingValues(all = dimensionResource(id = R.dimen.extraSmallPadding))
+        ) {
+            items(count = articles.size) { index ->
+                articles[index].let {
+                    ArticleCard(
+                        modifier = Modifier,
+                        article = it,
+                        onClick = {onClick(it)},
+                    )
+                }
+            }
+        }
+
+}
+
+@Composable
+fun ArticlesList(
+    modifier: Modifier,
     articles : LazyPagingItems<Article>,
     onClick : (Article) -> Unit
 ) {
@@ -25,12 +52,12 @@ fun ArticlesList(
 
     if(handlePagingResult) {
         LazyColumn(
-            modifier = Modifier.fillMaxSize(),
-            verticalArrangement = Arrangement.spacedBy(dimensionResource(id = R.dimen.mediumPadding1)),
+            modifier = modifier.fillMaxSize(),
+            verticalArrangement = Arrangement.spacedBy(dimensionResource(id = R.dimen.extraSmallPadding)),
             contentPadding = PaddingValues(all = dimensionResource(id = R.dimen.extraSmallPadding))
         ) {
-            items(count = articles.itemCount) {
-                articles[it]?.let {
+            items(count = articles.itemCount) { index ->
+                articles[index]?.let {
                     ArticleCard(
                         modifier = Modifier,
                         article = it,
@@ -62,6 +89,12 @@ fun handlePagingResult(
                 ShimmerEffect()
                 false
             }
+
+            articles.itemCount == 0 -> {
+                EmptyScreen(noResult = true)
+                false
+            }
+
             error != null -> {
                 EmptyScreen(error)
                 false

@@ -10,22 +10,23 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.dimensionResource
 import androidx.paging.compose.collectAsLazyPagingItems
 import com.example.news_app.R
+import com.example.news_app.domain.model.Article
 import com.example.news_app.presentation.common.ArticlesList
 import com.example.news_app.presentation.common.SearchBar
-import com.example.news_app.presentation.navgraph.Route
 
 @Composable
 fun SearchScreen(
     state: SearchState,
     event: (SearchEvent) -> Unit,
-    navigate : (String) -> Unit
+    navigateToDetails : (Article) -> Unit
 ) {
 
     Column (
         modifier = Modifier
             .padding(
-                start = dimensionResource(id = R.dimen.mediumPadding1),
-                end = dimensionResource(id = R.dimen.mediumPadding1)
+                top = dimensionResource(id = R.dimen.mediumPadding1),
+                start = dimensionResource(id = R.dimen.extraSmallPadding),
+                end = dimensionResource(id = R.dimen.extraSmallPadding)
             )
             .statusBarsPadding()
     ) {
@@ -50,7 +51,7 @@ fun SearchScreen(
                 modifier = Modifier,
                 articles = articles,
                 onClick = {
-                    navigate(Route.DetailScreen.route)
+                    navigateToDetails(it)
                 }
             )
         }

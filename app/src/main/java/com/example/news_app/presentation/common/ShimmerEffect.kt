@@ -28,11 +28,11 @@ import com.example.news_app.R
 import com.example.news_app.presentation.theme.NewsAppTheme
 
 fun Modifier.shimmerEffect(): Modifier = composed {
-    val transition = rememberInfiniteTransition()
+    val transition = rememberInfiniteTransition(label = "")
     val alpha = transition.animateFloat(initialValue = 0.2f, targetValue = 0.9f , animationSpec = infiniteRepeatable(
         animation = tween(durationMillis = 1000),
         repeatMode = RepeatMode.Reverse
-    )
+    ), label = ""
     ).value
 
     this.background(color = Color.LightGray.copy(alpha = alpha))
@@ -43,7 +43,7 @@ fun ArticleCardShimmerEffect(
     modifier: Modifier = Modifier
 ) {
     Row(
-        modifier = Modifier
+        modifier = modifier
     ) {
         Box(
 

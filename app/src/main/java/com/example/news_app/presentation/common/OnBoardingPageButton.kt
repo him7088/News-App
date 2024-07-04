@@ -14,7 +14,6 @@ import com.example.news_app.presentation.theme.NewsAppTheme
 
 @Composable
 fun OnBoardingPageButton(
-    text : String,
     imageVector: ImageVector,
     onClick : () -> Unit,
     modifier: Modifier

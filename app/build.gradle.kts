@@ -3,6 +3,7 @@ plugins {
     alias(libs.plugins.jetbrains.kotlin.android)
     id("com.google.dagger.hilt.android")
     id("com.google.devtools.ksp")
+    id ("kotlin-parcelize")
     id("org.jetbrains.kotlin.plugin.compose") version "2.0.0"
 }
 
@@ -89,9 +90,9 @@ dependencies {
     implementation("io.coil-kt:coil-compose:2.6.0")
 
 
+    implementation(libs.kotlin.parcelize.runtime)
 
-
-
+    implementation(platform("androidx.compose:compose-bom:2024.06.00"))
     implementation(libs.androidx.navigation.compose)
     implementation(libs.androidx.lifecycle.viewmodel.compose)
 
