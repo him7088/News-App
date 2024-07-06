@@ -1,6 +1,5 @@
 package com.example.news_app.presentation.home
 
-import android.util.Log
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -13,36 +12,31 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.LocalContentColor
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
-import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.pulltorefresh.PullToRefreshContainer
 import androidx.compose.material3.pulltorefresh.PullToRefreshDefaults.Indicator
+import androidx.compose.material3.pulltorefresh.PullToRefreshDefaults.containerColor
 import androidx.compose.material3.pulltorefresh.rememberPullToRefreshState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberCoroutineScope
-import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
-import androidx.paging.LoadState
+import androidx.compose.ui.zIndex
 import androidx.paging.compose.LazyPagingItems
-import androidx.paging.compose.collectAsLazyPagingItems
 import com.example.news_app.R
 import com.example.news_app.domain.model.Article
-import com.example.news_app.presentation.common.ArticlesList
 import com.example.news_app.presentation.common.PullToRefreshLazyColumn
 import com.example.news_app.presentation.common.SearchBar
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalFoundationApi::class, ExperimentalMaterial3Api::class)
 @Composable
@@ -66,14 +60,14 @@ fun HomeScreen(
             if(article.itemCount>10) {
                 article.itemSnapshotList.items
                     .slice(IntRange(start = 0, endInclusive = 9))
-                    .joinToString(separator = " \uD83d\uDFE5 "){
+                    .joinToString(separator = " \uD83D\uDFE6 "){
                         it.title
                     }
             }
             else { "" }
         }
     }
-    
+
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -83,7 +77,18 @@ fun HomeScreen(
 
 
     ) {
-        
+        PullToRefreshContainer(
+            state = pullToRefreshState,
+            indicator = {pullToRefreshState ->
+                Indicator(state = pullToRefreshState, color = LocalContentColor.current
+                )
+            },
+            modifier = Modifier.align(Alignment.CenterHorizontally)
+                .zIndex(10f),
+            containerColor = MaterialTheme.colorScheme.background,
+            contentColor = colorResource(id = R.color.app_color)
+        )
+
         Image(
             painter = painterResource(id = R.drawable.ic_launcher_logo),
             contentDescription = null,
@@ -106,23 +111,16 @@ fun HomeScreen(
         )
 
         Spacer(modifier = Modifier.height(dimensionResource(id = R.dimen.mediumPadding1)))
-        
+
         Text(
             text = titles,
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(start = dimensionResource(id = R.dimen.mediumPadding1))
+                //.padding(start = dimensionResource(id = R.dimen.extraSmallPadding))
                 .basicMarquee()
         )
         Spacer(modifier = Modifier.height(dimensionResource(id = R.dimen.smallPadding)))
-        
-//        ArticlesList(
-//            modifier = Modifier.padding(dimensionResource(id = R.dimen.mediumPadding1)),
-//            articles = article,
-//            onClick = {
-//                navigateToDetails(it)
-//            }
-//        )
+
 
         PullToRefreshLazyColumn(
             items = article,

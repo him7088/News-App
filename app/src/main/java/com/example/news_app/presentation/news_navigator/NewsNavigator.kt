@@ -1,6 +1,16 @@
 package com.example.news_app.presentation.news_navigator
 
 import android.widget.Toast
+import androidx.compose.animation.AnimatedContentScope
+import androidx.compose.animation.AnimatedContentTransitionScope
+import androidx.compose.animation.EnterTransition
+import androidx.compose.animation.core.EaseIn
+import androidx.compose.animation.core.EaseOut
+import androidx.compose.animation.core.LinearEasing
+import androidx.compose.animation.core.tween
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
+import androidx.compose.animation.slideIn
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
@@ -27,6 +37,8 @@ import androidx.paging.map
 import com.example.news_app.domain.model.Article
 import com.example.news_app.presentation.bookmark.BookmarkScreen
 import com.example.news_app.presentation.bookmark.BookmarkViewModel
+import com.example.news_app.presentation.common.enterTransition
+import com.example.news_app.presentation.common.exitTransition
 import com.example.news_app.presentation.details.DetailScreen
 import com.example.news_app.presentation.details.DetailsEvent
 import com.example.news_app.presentation.details.DetailsViewModel
@@ -111,7 +123,7 @@ fun NewsNavigator() {
             modifier = Modifier.padding(bottom = bottomPadding)
         ) {
 
-            composable(route = Route.HomeScreen.route) {
+            composable(route = Route.HomeScreen.route, enterTransition = enterTransition(), exitTransition = exitTransition()) {
                 val viewModel : HomeViewModel = hiltViewModel()
 
                 val newsState = viewModel.newsState.collectAsState()
@@ -137,7 +149,7 @@ fun NewsNavigator() {
                 )
             }
 
-            composable(route = Route.SearchScreen.route) {
+            composable(route = Route.SearchScreen.route, enterTransition = enterTransition(), exitTransition = exitTransition()) {
                 val viewModel : SearchViewModel = hiltViewModel()
                 val state = viewModel.state.collectAsState().value
                 SearchScreen(
@@ -169,7 +181,7 @@ fun NewsNavigator() {
                 }
             }
 
-            composable(route = Route.BookmarkScreen.route) {
+            composable(route = Route.BookmarkScreen.route, enterTransition = enterTransition(), exitTransition = exitTransition()) {
                 val viewModel : BookmarkViewModel = hiltViewModel()
                 val state = viewModel.state.collectAsState().value
 

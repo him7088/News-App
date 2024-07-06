@@ -43,14 +43,15 @@ fun ArticleCardShimmerEffect(
     modifier: Modifier = Modifier
 ) {
     Row(
-        modifier = modifier
+        modifier = modifier.fillMaxWidth()
     ) {
         Box(
 
             modifier = Modifier
                 .size(dimensionResource(id = R.dimen.articleSize))
                 .clip(MaterialTheme.shapes.medium)
-                .shimmerEffect(),
+                .shimmerEffect()
+                .fillMaxWidth(),
 
         )
         Column(
@@ -65,7 +66,7 @@ fun ArticleCardShimmerEffect(
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(30.dp)
-                    .padding(horizontal = dimensionResource(id = R.dimen.mediumPadding1))
+                    .padding(horizontal = dimensionResource(id = R.dimen.extraSmallPadding))
                     .shimmerEffect(),
 
                 )
@@ -78,7 +79,7 @@ fun ArticleCardShimmerEffect(
                     modifier = Modifier
                         .fillMaxWidth(0.5f)
                         .height(15.dp)
-                        .padding(horizontal = dimensionResource(id = R.dimen.mediumPadding1))
+                        .padding(horizontal = dimensionResource(id = R.dimen.extraSmallPadding))
                         .shimmerEffect(),
 
                     )

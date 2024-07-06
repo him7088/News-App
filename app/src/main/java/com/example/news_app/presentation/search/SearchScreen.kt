@@ -2,17 +2,21 @@ package com.example.news_app.presentation.search
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.dimensionResource
+import androidx.compose.ui.tooling.preview.Preview
+import androidx.lifecycle.Lifecycle
 import androidx.paging.compose.collectAsLazyPagingItems
 import com.example.news_app.R
 import com.example.news_app.domain.model.Article
 import com.example.news_app.presentation.common.ArticlesList
 import com.example.news_app.presentation.common.SearchBar
+import com.example.news_app.presentation.theme.NewsAppTheme
 
 @Composable
 fun SearchScreen(
@@ -29,6 +33,7 @@ fun SearchScreen(
                 end = dimensionResource(id = R.dimen.extraSmallPadding)
             )
             .statusBarsPadding()
+            .fillMaxSize()
     ) {
 
         SearchBar(
@@ -54,6 +59,16 @@ fun SearchScreen(
                     navigateToDetails(it)
                 }
             )
+        }
+    }
+}
+
+@Preview(showBackground = true)
+@Composable
+fun SearchScreenPreview() {
+    NewsAppTheme {
+        SearchScreen(state = SearchState(), event = {}) {
+
         }
     }
 }

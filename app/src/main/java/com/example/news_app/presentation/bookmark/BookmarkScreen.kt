@@ -38,7 +38,7 @@ fun BookmarkScreen(
         
         Text(
             text = "Bookmark",
-            style = MaterialTheme.typography.displayMedium.copy(fontWeight = FontWeight.Bold),
+            style = MaterialTheme.typography.displaySmall.copy(fontWeight = FontWeight.Bold),
             color = colorResource(id = R.color.app_color),
             modifier = Modifier.fillMaxWidth(),
             textAlign = TextAlign.Center

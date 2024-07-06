@@ -71,8 +71,8 @@ fun NewsBottomNavigation(
 fun BottomNavigationBarPreview() {
     NewsAppTheme {
         NewsBottomNavigation(items = listOf(
-            BottomNavigationItem(icon = R.drawable.baseline_bookmark_border_24, text = "Bookmark"),
-            BottomNavigationItem(icon = R.drawable.baseline_share_24, text = "Share"),
+            BottomNavigationItem(icon = R.drawable.baseline_bookmark_border_24, text = "Bookmark", route = ""),
+            BottomNavigationItem(icon = R.drawable.baseline_share_24, text = "Share", route = ""),
            // BottomNavigationItem(icon = R.drawable.ic_search_document, text = "Search")
         ), selected = 0) {
 

@@ -110,7 +110,7 @@ fun ShimmerEffect() {
     ){
         repeat(10) {
             ArticleCardShimmerEffect(
-                modifier = Modifier.padding(horizontal = dimensionResource(id = R.dimen.mediumPadding1))
+                modifier = Modifier.padding(horizontal = dimensionResource(id = R.dimen.extraSmallPadding))
             )
         }
     }

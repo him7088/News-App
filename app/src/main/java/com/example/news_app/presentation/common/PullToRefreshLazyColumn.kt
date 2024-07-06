@@ -78,15 +78,7 @@ fun PullToRefreshLazyColumn(
 
 
 
-        PullToRefreshContainer(
-            state = pullToRefreshState,
-            indicator = {pullToRefreshState ->
-                Indicator(state = pullToRefreshState, color = LocalContentColor.current
-                )
-            },
-            modifier = modifier.align(Alignment.TopCenter),
-            containerColor = Color.Transparent
-        )
+
 
 
     }
