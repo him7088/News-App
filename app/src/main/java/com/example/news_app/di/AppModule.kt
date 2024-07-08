@@ -20,7 +20,6 @@ import com.example.news_app.domain.usecases.news.SearchNews
 import com.example.news_app.domain.usecases.news.SelectArticle
 import com.example.news_app.domain.usecases.news.SelectArticles
 import com.example.news_app.domain.usecases.news.UpsertArticle
-import com.example.news_app.presentation.splashScreen.MySplashCondition
 import com.example.news_app.util.Constants
 import dagger.Module
 import dagger.Provides
@@ -48,9 +47,6 @@ object AppModule {
         saveAppEntry = SaveAppEntry(localUserManager)
     )
 
-    @Provides
-    @Singleton
-    fun provideMySplashCondition()= MySplashCondition()
 
     @Provides
     @Singleton
