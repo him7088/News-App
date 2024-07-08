@@ -1,22 +1,26 @@
 package com.example.news_app
 
+import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.news_app.domain.usecases.app_Entry.AppEntryUseCases
 import com.example.news_app.presentation.navgraph.Route
 import com.example.news_app.presentation.splashScreen.MySplashCondition
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class MainViewModel @Inject constructor(
     private val appEntryUseCases: AppEntryUseCases,
-    val splashCondition: MySplashCondition
+
 ) : ViewModel() {
 
+   val splashValue = mutableStateOf(false)
 
     private var _startDestination = MutableStateFlow(Route.AppStartNavigation.route)
     var startDestination : StateFlow<String> = _startDestination
@@ -34,8 +38,8 @@ class MainViewModel @Inject constructor(
                    _startDestination.value = Route.AppStartNavigation.route
                }
 
+                delay(4000)
                 _isLoading.value = false
-               splashCondition.shouldKeepOnScreen()
            }
        }
 
