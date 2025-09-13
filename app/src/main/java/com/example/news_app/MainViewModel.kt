@@ -5,7 +5,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.news_app.domain.usecases.app_Entry.AppEntryUseCases
 import com.example.news_app.presentation.navgraph.Route
-import com.example.news_app.presentation.splashScreen.MySplashCondition
+
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
